@@ -21,11 +21,11 @@ def autenticar(cpf, senha):
     con = conectar()
     cursor = con.cursor()
     cursor.execute("select senha from clientes WHERE cpf = %s", (cpf,))
-    resultado = cursor.fetchdone() #metodo de objeto, recupera todas as linhas restantes de um conjunto de resultado de consulta de banco de dados
+    resultado = cursor.fetchone() #metodo de objeto, recupera todas as linhas restantes de um conjunto de resultado de consulta de banco de dados
     con.close()
 
-    if(resultado == False):
-        return "Conta não encontrada."
+    if(resultado is None):
+        return False, "Conta não encontrada."
 
     senha_hash = resultado[0].encode("utf-8")
 
